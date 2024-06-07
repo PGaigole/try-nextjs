@@ -1,12 +1,24 @@
 import Link from "next/link";
 import React from "react";
+import Image from "next/image";
 
 const DrinksList = ({ drinks }) => {
   return (
-    <ul>
+    <ul className="grid sm:grid-cols-2 gap-6 mt-6">
       {drinks.map((drink) => (
         <li key="drink.idDrink">
-          <Link href={`/bar/${drink.idDrink}`}>{drink.strDrink}</Link>
+          <Link href={`/bar/${drink.idDrink}`}>
+            <div className="relative h-60 w-60">
+              <Image
+                src={drink.strDrinkThumb}
+                alt={drink.strDrink}
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1920px) 50vw"
+                className="rounded-md object-cover"
+              />
+            </div>
+            {drink.strDrink}
+          </Link>
         </li>
       ))}
     </ul>
