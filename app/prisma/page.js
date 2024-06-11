@@ -1,11 +1,11 @@
 import prisma from "@/utils/db";
 
 const getAllTasks = async () => {
-  await prisma.task.create({
-    data: {
-      content: "buy milk",
-    },
-  });
+  // await prisma.task.create({
+  //   data: {
+  //     content: "buy milk",
+  //   },
+  // });
   const allTasks = await prisma.task.findMany();
   return allTasks;
 };
