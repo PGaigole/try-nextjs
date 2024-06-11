@@ -3,17 +3,20 @@ import prisma from "@/utils/db";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-export const createTask = async (formData) => {
+export const createTask = async (prevState, formData) => {
+  await new Promise((resolve) => setTimeout(resolve, 2000));
   const newTask = formData.get("newTask");
-  if (!newTask) {
-    throw new Error("Task cannot be empty");
+  try {
+    await prisma.task.create({
+      data: {
+        content: newTask,
+      },
+    });
+    return { message: "Success" };
+    revalidatePath("/todo-list");
+  } catch (error) {
+    return { message: "Error" };
   }
-  await prisma.task.create({
-    data: {
-      content: newTask,
-    },
-  });
-  revalidatePath("/todo-list");
 };
 
 export const getAllTasks = async () => {
